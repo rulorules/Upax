@@ -7,8 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UIImagePickerControllerDelegate , UINavigationControllerDelegate {
 
+    var imagPickUp : UIImagePickerController!
+    var image : UIImage!
+    
     private let tableView: UITableView = {
         let table = UITableView()
         table.register(NombreTableViewCell.nib(), forCellReuseIdentifier: NombreTableViewCell.id)
@@ -117,6 +120,22 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 self.performSegue(withIdentifier: "fotoID", sender: indexPath)
             }))
             alert.addAction(UIAlertAction(title: "Tomar/Retomar foto", style: .default, handler: { action in
+                self.imagPickUp = self.imageAndVideos()
+                
+                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera){
+                    self.imagPickUp.mediaTypes = ["public.image"]
+                    self.imagPickUp.sourceType = UIImagePickerController.SourceType.camera;
+                    self.imagPickUp.cameraDevice = .front;
+                    self.imagPickUp.delegate = self
+                    self.present(self.imagPickUp, animated: true, completion: nil)
+                }
+                else{
+                    UIAlertController(title: "No se encontró la cámara", message: "No se pudo establecer comunicación con la cámara.", preferredStyle: .alert).show(self, sender: nil);
+                    print("no hay camara disponible")
+                }
+                
+                
+                print("Foto tomada")
                   print("No presionado")
             }))
             self.present(alert, animated: true, completion: nil)
@@ -126,6 +145,42 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             
     }
     
+    func imageAndVideos()-> UIImagePickerController{
+        if(imagPickUp == nil){
+            imagPickUp = UIImagePickerController()
+            imagPickUp.delegate = self
+            imagPickUp.allowsEditing = false
+        }
+        return imagPickUp
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        //self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.imageView?.contentMode = .scaleAspectFill
+        //self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.imageView?.image = image
+        //self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.textLabel?.text = "Selfie capturada"
+        let cell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! SelfieTableViewCell
+        cell.PreviewImageView.image = image
+        
+        imagPickUp.dismiss(animated: true, completion: { () -> Void in
+            // Dismiss
+        })
+
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        imagPickUp.dismiss(animated: true, completion: { () -> Void in
+            // Dismiss
+        })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+        {
+            let vc = segue.destination as? FullPhotoViewController
+            vc?.foto = image
+
+        }
+ 
     
 }
 
