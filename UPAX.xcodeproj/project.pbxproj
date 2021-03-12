@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8EB184C025FB3DBD0044D096 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB184BF25FB3DBD0044D096 /* GraphViewController.swift */; };
+		8EB184C525FB445F0044D096 /* GraphStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB184C425FB445F0044D096 /* GraphStruct.swift */; };
+		8EB184CD25FB4CDC0044D096 /* ShowStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB184CC25FB4CDC0044D096 /* ShowStruct.swift */; };
 		8EB82BD525FA78B600D793F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB82BD425FA78B600D793F5 /* AppDelegate.swift */; };
 		8EB82BD725FA78B600D793F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB82BD625FA78B600D793F5 /* SceneDelegate.swift */; };
 		8EB82BD925FA78B600D793F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB82BD825FA78B600D793F5 /* ViewController.swift */; };
@@ -41,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		8EB184BF25FB3DBD0044D096 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
+		8EB184C425FB445F0044D096 /* GraphStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphStruct.swift; sourceTree = "<group>"; };
+		8EB184CC25FB4CDC0044D096 /* ShowStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowStruct.swift; path = "../../BA-main/TestOnlineiOS posttiempo/TestOnlineiOS/Models/ShowStruct.swift"; sourceTree = "<group>"; };
 		8EB82BD125FA78B600D793F5 /* UPAX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UPAX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EB82BD425FA78B600D793F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EB82BD625FA78B600D793F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 				8EB82BDA25FA78B600D793F5 /* Main.storyboard */,
 				8EB82BDF25FA78BA00D793F5 /* LaunchScreen.storyboard */,
 				8EB184BF25FB3DBD0044D096 /* GraphViewController.swift */,
+				8EB184C425FB445F0044D096 /* GraphStruct.swift */,
+				8EB184CC25FB4CDC0044D096 /* ShowStruct.swift */,
 				8EB82BD425FA78B600D793F5 /* AppDelegate.swift */,
 				8EB82BD625FA78B600D793F5 /* SceneDelegate.swift */,
 				8EB82BD825FA78B600D793F5 /* ViewController.swift */,
@@ -276,7 +282,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EB82BD925FA78B600D793F5 /* ViewController.swift in Sources */,
+				8EB184CD25FB4CDC0044D096 /* ShowStruct.swift in Sources */,
 				8EB82C3625FAEF7800D793F5 /* NombreTableViewCell.swift in Sources */,
+				8EB184C525FB445F0044D096 /* GraphStruct.swift in Sources */,
 				8EB82BD525FA78B600D793F5 /* AppDelegate.swift in Sources */,
 				8EB184C025FB3DBD0044D096 /* GraphViewController.swift in Sources */,
 				8EB82C1925FACAF500D793F5 /* SelfieTableViewCell.swift in Sources */,

@@ -60,10 +60,10 @@
             </objects>
             <point key="canvasLocation" x="-732" y="116"/>
         </scene>
-        <!--View Controller-->
+        <!--Graph View Controller-->
         <scene sceneID="QW2-Pn-2wS">
             <objects>
-                <viewController id="xja-IR-YvZ" sceneMemberID="viewController">
+                <viewController id="xja-IR-YvZ" customClass="GraphViewController" customModule="UPAX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YW7-eB-7Zo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
