@@ -131,12 +131,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 }
                 else{
                     UIAlertController(title: "No se encontró la cámara", message: "No se pudo establecer comunicación con la cámara.", preferredStyle: .alert).show(self, sender: nil);
-                    print("no hay camara disponible")
                 }
                 
-                
-                print("Foto tomada")
-                  print("No presionado")
             }))
             self.present(alert, animated: true, completion: nil)
         }else if(indexPath.row == 2){
@@ -156,21 +152,16 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-        //self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.imageView?.contentMode = .scaleAspectFill
-        //self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.imageView?.image = image
-        //self.tableView.cellForRow(at: IndexPath(row: 1, section: 0))?.textLabel?.text = "Selfie capturada"
         let cell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! SelfieTableViewCell
         cell.PreviewImageView.image = image
         
         imagPickUp.dismiss(animated: true, completion: { () -> Void in
-            // Dismiss
         })
 
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         imagPickUp.dismiss(animated: true, completion: { () -> Void in
-            // Dismiss
         })
     }
     
@@ -178,7 +169,6 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         {
             let vc = segue.destination as? FullPhotoViewController
             vc?.foto = image
-
         }
  
     

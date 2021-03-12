@@ -118,8 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				8EB82BDA25FA78B600D793F5 /* Main.storyboard */,
-				8E5D12A225FC19CC0080D35E /* FullPhotoViewController.swift */,
 				8EB82BDF25FA78BA00D793F5 /* LaunchScreen.storyboard */,
+				8E5D12A225FC19CC0080D35E /* FullPhotoViewController.swift */,
 				8EF9D30525FBCF0B00D20D54 /* Camera.swift */,
 				8EB184BF25FB3DBD0044D096 /* GraphViewController.swift */,
 				8EB184C425FB445F0044D096 /* GraphStruct.swift */,
