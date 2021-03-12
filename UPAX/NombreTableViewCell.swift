@@ -7,9 +7,23 @@
 
 import UIKit
 
-class NombreTableViewCell: UITableViewCell {
+class NombreTableViewCell: UITableViewCell,UITextFieldDelegate {
 
+    @IBOutlet var NombreTextField: UITextField!
     static let id = "NombreTableViewCell"
+    
+    static func nib() -> UINib {
+            return UINib(nibName: "NombreTableViewCell", bundle: nil)
+        }
+    
+    public func inicia(){
+            NombreTextField.delegate = self
+        }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+     }  
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,5 +35,5 @@ class NombreTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
 }
