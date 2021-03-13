@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UIImagePickerControllerDelegate , UINavigationControllerDelegate {
 
     var imagPickUp : UIImagePickerController!
     var image : UIImage!
+    var docRef: DocumentReference!
     
     private let tableView: UITableView = {
         let table = UITableView()
@@ -34,6 +36,19 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     @objc func EnviarAFireBase(sender: UIButton!) {
         print("Enviar datos a Firebase")
+        let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! NombreTableViewCell
+        guard let name = cell.NombreTextField.text, !name.isEmpty else {return}
+    //TODO foto
+        print(name)
+        let dataToSave: [String: Any] = ["nombre": name]
+        docRef.setData(dataToSave) {(error) in
+            if let error = error {
+                print("Error: "+(error.localizedDescription))
+            }else{
+                print("Datos guardados a FileStore")
+            }
+        }
+        
      }
     
     private let formContainerView: UIView = {
@@ -48,6 +63,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
+        
+        docRef = Firestore.firestore().document("Usuarios/datos")
+        
         
         /**Boton imdb**************/
         self.view.addSubview(btnEnviar)

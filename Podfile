@@ -6,6 +6,7 @@ target 'UPAX' do
   use_frameworks!
 
 pod 'Charts'
+pod 'Firebase/Firestore'
 
   # Pods for UPAX
 
