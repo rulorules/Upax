@@ -15,32 +15,48 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
     var datos = TopGraphStruct(colors: [""], questions:[])
     var pieCharts = [PieChartView()]
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return self.datos.questions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let pieChart = PieChartView()
-        pieCharts.append(pieChart)
+        //let pieChart = PieChartView()
+        //pieCharts.append(pieChart)
+        
+        
         pieCharts[indexPath.row].delegate = self
+        var circleColors: [NSUIColor] = []
         let cell = tableView.dequeueReusableCell(withIdentifier: "graphCell", for: indexPath)
         
+        for view in cell.subviews  {
+                if let gra = view as? PieChartView {
+                    gra.removeFromSuperview()
+                }
+            }
         
-        pieCharts[indexPath.row].frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        pieCharts[indexPath.row].frame = CGRect(x: 0, y: 0, width: 400, height: 250)
         pieCharts[indexPath.row].center = cell.contentView.center
         
         cell.contentView.addSubview(pieCharts[indexPath.row])
         
         var entries = [PieChartDataEntry]()
-
+        var index = 0
+        
+        
         for j in self.datos.questions[indexPath.row].chartData {
-                //Falta color
+            print(self.datos.colors[index])
+            circleColors.append(hexStringToUIColor(hex: self.datos.colors[index]))
                 entries.append(PieChartDataEntry(value: Double(j.percetnage), label: j.text))
+                index+=1
             }
         
         let set = PieChartDataSet(entries: entries, label: self.datos.questions[indexPath.row].text)
-        set.colors = ChartColorTemplates.joyful()
+
+            
+        //circleColors.append(hexStringToUIColor(hex: "#ffffd3"))
+        set.colors = circleColors
         let data = PieChartData(dataSet: set)
         pieCharts[indexPath.row].data = data
         
@@ -56,7 +72,7 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
         overrideUserInterfaceStyle = .light
         GraphTableView.delegate = self
         GraphTableView.dataSource = self
-        GraphTableView.rowHeight = 400
+        GraphTableView.rowHeight = 250
 
                //Petición web
                var components = URLComponents()
@@ -84,12 +100,13 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
                         self.datos = try! JSONDecoder().decode(TopGraphStruct.self, from: data!)
                         //print(datos!)
                         
-                        /*for i in self.datos.questions {
-                            print(i.text)
-                            for j in i.chartData {
+                        for i in self.datos.questions {
+                            let pieChart = PieChartView()
+                            self.pieCharts.append(pieChart)
+                            /*for j in i.chartData {
                                 print("color"+","+j.text+","+String(j.percetnage))
-                            }
-                        }*/
+                            }*/
+                        }
                         self.GraphTableView.reloadData()
                        }
                        
@@ -104,6 +121,29 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
                dismiss(animated: false, completion: nil)
     }
     
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+
+        if ((cString.count) != 6) {
+            return UIColor.gray
+        }
+
+        var rgbValue:UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
     
 
 }
+
+
