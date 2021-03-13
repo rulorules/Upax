@@ -8,14 +8,56 @@
 import UIKit
 import Charts
 
-class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDelegate {
+class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDelegate,UITableViewDataSource {
     
-    var pieChart = PieChartView()
+    
+    @IBOutlet var GraphTableView: UITableView!
+    var datos = TopGraphStruct(colors: [""], questions:[])
+    var pieCharts = [PieChartView()]
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return self.datos.questions.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let pieChart = PieChartView()
+        pieCharts.append(pieChart)
+        pieCharts[indexPath.row].delegate = self
+        let cell = tableView.dequeueReusableCell(withIdentifier: "graphCell", for: indexPath)
+        
+        
+        pieCharts[indexPath.row].frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        pieCharts[indexPath.row].center = cell.contentView.center
+        
+        cell.contentView.addSubview(pieCharts[indexPath.row])
+        
+        var entries = [PieChartDataEntry]()
+
+        for j in self.datos.questions[indexPath.row].chartData {
+                //Falta color
+                entries.append(PieChartDataEntry(value: Double(j.percetnage), label: j.text))
+            }
+        
+        let set = PieChartDataSet(entries: entries, label: self.datos.questions[indexPath.row].text)
+        set.colors = ChartColorTemplates.joyful()
+        let data = PieChartData(dataSet: set)
+        pieCharts[indexPath.row].data = data
+        
+
+        return cell
+    }
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pieChart.delegate = self
-               
+        overrideUserInterfaceStyle = .light
+        GraphTableView.delegate = self
+        GraphTableView.dataSource = self
+        GraphTableView.rowHeight = 400
+
                //Petición web
                var components = URLComponents()
                components.scheme = "https"
@@ -39,15 +81,16 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
                    let resp = response as! HTTPURLResponse
                    if resp.statusCode == 200 {
                        DispatchQueue.main.async {
-                        let datos = try? JSONDecoder().decode(TopGraphStruct.self, from: data!)
+                        self.datos = try! JSONDecoder().decode(TopGraphStruct.self, from: data!)
                         //print(datos!)
                         
-                        for i in datos!.questions {
+                        /*for i in self.datos.questions {
                             print(i.text)
                             for j in i.chartData {
                                 print("color"+","+j.text+","+String(j.percetnage))
                             }
-                        }
+                        }*/
+                        self.GraphTableView.reloadData()
                        }
                        
                    } else {
@@ -61,25 +104,6 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
                dismiss(animated: false, completion: nil)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        pieChart.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
-        pieChart.center = view.center
-        view.addSubview(pieChart)
-        
-        
-        var entries = [PieChartDataEntry]()
-        for x in 0..<10 {
-            entries.append(PieChartDataEntry(value: Double(x), data: x))
-        }
-        let set = PieChartDataSet(entries: entries)
-        set.colors = ChartColorTemplates.joyful()
-        
-        let data = PieChartData(dataSet: set)
-        pieChart.data = data
-        
-    }
     
 
 }
