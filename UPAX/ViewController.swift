@@ -13,6 +13,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var imagPickUp : UIImagePickerController!
     var image : UIImage!
     var docRef: DocumentReference!
+
+    var rootref = Database.database().reference()
     
     private let tableView: UITableView = {
         let table = UITableView()
@@ -35,12 +37,22 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     }()
     
     @objc func EnviarAFireBase(sender: UIButton!) {
+        
         print("Enviar datos a Firebase")
         let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! NombreTableViewCell
         guard let name = cell.NombreTextField.text, !name.isEmpty else {return}
-    //TODO foto
-        print(name)
-        let dataToSave: [String: Any] = ["nombre": name]
+        docRef = Firestore.firestore().document("Usuarios/"+name)
+        
+        let targetSize = CGSize(width: 200, height: 200)
+
+        let scaledImage = image.scalePreservingAspectRatio(
+            targetSize: targetSize
+        )
+        
+        let imageData = scaledImage.jpegData(compressionQuality: 0.5)
+        let imageBase64String = imageData?.base64EncodedString()
+        
+        let dataToSave: [String: Any] = ["FotoB64": imageBase64String!]
         docRef.setData(dataToSave) {(error) in
             if let error = error {
                 print("Error: "+(error.localizedDescription))
@@ -64,7 +76,10 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
-        docRef = Firestore.firestore().document("Usuarios/datos")
+        rootref.child("color").observe(DataEventType.value, with: { (snapshot) in
+            let nuevoColor = snapshot.value as? String  ?? ""
+            self.view.backgroundColor = self.hexStringToUIColor(hex: nuevoColor)
+        })
         
         
         /**Boton imdb**************/
@@ -189,6 +204,56 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             vc?.foto = image
         }
  
-    
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+
+        if ((cString.count) != 6) {
+            return UIColor.gray
+        }
+
+        var rgbValue:UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
 }
 
+
+extension UIImage {
+    func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
+        // Determine the scale factor that preserves aspect ratio
+        let widthRatio = targetSize.width / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        let scaleFactor = min(widthRatio, heightRatio)
+        
+        // Compute the new image size that preserves aspect ratio
+        let scaledImageSize = CGSize(
+            width: size.width * scaleFactor,
+            height: size.height * scaleFactor
+        )
+
+        // Draw and return the resized UIImage
+        let renderer = UIGraphicsImageRenderer(
+            size: scaledImageSize
+        )
+
+        let scaledImage = renderer.image { _ in
+            self.draw(in: CGRect(
+                origin: .zero,
+                size: scaledImageSize
+            ))
+        }
+        
+        return scaledImage
+    }
+}

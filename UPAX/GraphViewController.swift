@@ -7,6 +7,7 @@
 
 import UIKit
 import Charts
+import Firebase
 
 class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDelegate,UITableViewDataSource {
     
@@ -14,7 +15,7 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
     @IBOutlet var GraphTableView: UITableView!
     var datos = TopGraphStruct(colors: [""], questions:[])
     var pieCharts = [PieChartView()]
-    
+    var rootref = Database.database().reference()
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -70,6 +71,12 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
+        
+        rootref.child("color").observe(DataEventType.value, with: { (snapshot) in
+            let nuevoColor = snapshot.value as? String  ?? ""
+            self.view.backgroundColor = self.hexStringToUIColor(hex: nuevoColor)
+        })
+        
         GraphTableView.delegate = self
         GraphTableView.dataSource = self
         GraphTableView.rowHeight = 250

@@ -7,6 +7,7 @@ target 'UPAX' do
 
 pod 'Charts'
 pod 'Firebase/Firestore'
+pod 'Firebase/Database'
 
   # Pods for UPAX
 
