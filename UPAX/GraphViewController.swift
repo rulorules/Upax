@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import Charts
 
-class GraphViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDelegate {
+    
+    var pieChart = PieChartView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //https://us-central1-bibliotecadecontenido.cloudfunctions.net/helloWorld
+        pieChart.delegate = self
                
                //Petición web
                var components = URLComponents()
@@ -58,12 +61,24 @@ class GraphViewController: UIViewController, UITableViewDelegate, UITableViewDat
                dismiss(animated: false, completion: nil)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        pieChart.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.width)
+        pieChart.center = view.center
+        view.addSubview(pieChart)
+        
+        
+        var entries = [PieChartDataEntry]()
+        for x in 0..<10 {
+            entries.append(PieChartDataEntry(value: Double(x), data: x))
+        }
+        let set = PieChartDataSet(entries: entries)
+        set.colors = ChartColorTemplates.joyful()
+        
+        let data = PieChartData(dataSet: set)
+        pieChart.data = data
+        
     }
     
 

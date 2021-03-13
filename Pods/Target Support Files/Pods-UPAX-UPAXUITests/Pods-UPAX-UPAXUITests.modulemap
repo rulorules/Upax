@@ -1,0 +1,6 @@
+framework module Pods_UPAX_UPAXUITests {
+  umbrella header "Pods-UPAX-UPAXUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
