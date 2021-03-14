@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		014826993414C8FE21215266 /* Pods_UPAXTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B986E100F029DED92AE121A /* Pods_UPAXTests.framework */; };
 		78A9EB644694DE11158C6193 /* Pods_UPAX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEA38C0EF665C1EE1875AE1 /* Pods_UPAX.framework */; };
+		8E475D2825FDA8FF00A134C4 /* Funciones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E475D2725FDA8FF00A134C4 /* Funciones.swift */; };
 		8E5D12A325FC19CC0080D35E /* FullPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D12A225FC19CC0080D35E /* FullPhotoViewController.swift */; };
 		8EB184C025FB3DBD0044D096 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB184BF25FB3DBD0044D096 /* GraphViewController.swift */; };
 		8EB184C525FB445F0044D096 /* GraphStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB184C425FB445F0044D096 /* GraphStruct.swift */; };
@@ -54,6 +55,7 @@
 		4E98ECF1E0DE8D5DFC46A66D /* Pods-UPAXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UPAXTests.debug.xcconfig"; path = "Target Support Files/Pods-UPAXTests/Pods-UPAXTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5152B8240B8187A2629A680E /* Pods_UPAX_UPAXUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UPAX_UPAXUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CEA38C0EF665C1EE1875AE1 /* Pods_UPAX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UPAX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E475D2725FDA8FF00A134C4 /* Funciones.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Funciones.swift; sourceTree = "<group>"; };
 		8E5D12A225FC19CC0080D35E /* FullPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPhotoViewController.swift; sourceTree = "<group>"; };
 		8EB184BF25FB3DBD0044D096 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		8EB184C425FB445F0044D096 /* GraphStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphStruct.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				8EB82BDA25FA78B600D793F5 /* Main.storyboard */,
 				8EB82BDF25FA78BA00D793F5 /* LaunchScreen.storyboard */,
 				8E5D12A225FC19CC0080D35E /* FullPhotoViewController.swift */,
+				8E475D2725FDA8FF00A134C4 /* Funciones.swift */,
 				8EF9D30525FBCF0B00D20D54 /* Camera.swift */,
 				8EB184BF25FB3DBD0044D096 /* GraphViewController.swift */,
 				8EB184C425FB445F0044D096 /* GraphStruct.swift */,
@@ -449,6 +452,7 @@
 				8EB82C1925FACAF500D793F5 /* SelfieTableViewCell.swift in Sources */,
 				8EB82BD725FA78B600D793F5 /* SceneDelegate.swift in Sources */,
 				8EF9D30625FBCF0B00D20D54 /* Camera.swift in Sources */,
+				8E475D2825FDA8FF00A134C4 /* Funciones.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +632,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 88BTHVR7TK;
 				INFOPLIST_FILE = UPAX/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -648,6 +653,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 88BTHVR7TK;
 				INFOPLIST_FILE = UPAX/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

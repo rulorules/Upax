@@ -33,10 +33,9 @@ class Camera:  UIViewController, UIImagePickerControllerDelegate , UINavigationC
         }
         else{
             //UIAlertController(title: "iOSDevCenter", message: "No Camera available.", preferredStyle: .alert).show(self, sender: nil);
-            print("no hay camara disponible")
+            //print("no hay camara disponible")
         }
         
-        
-        print("Foto tomada")
+        //print("Foto tomada")
     }
 }

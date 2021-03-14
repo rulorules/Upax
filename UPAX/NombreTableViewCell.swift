@@ -23,7 +23,19 @@ class NombreTableViewCell: UITableViewCell,UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-     }  
+     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        if string == " " {
+            return true
+        } // now allowing space between name
+        if string.rangeOfCharacter(from: CharacterSet.letters.inverted) != nil {
+            return false
+        }
+
+        return true
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

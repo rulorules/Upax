@@ -38,26 +38,34 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     @objc func EnviarAFireBase(sender: UIButton!) {
         
-        print("Enviar datos a Firebase")
         let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! NombreTableViewCell
-        guard let name = cell.NombreTextField.text, !name.isEmpty else {return}
+        guard let name = cell.NombreTextField.text, !name.isEmpty else {
+            let alert = UIAlertController(title: "Falta nombre", message: "Ingresa tu nombre para poder enviar.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
+        if image == nil {
+            let alert = UIAlertController(title: "Falta Fotografía", message: "Primero debes tomar una fotografía.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
         docRef = Firestore.firestore().document("Usuarios/"+name)
-        
         let targetSize = CGSize(width: 200, height: 200)
-
         let scaledImage = image.scalePreservingAspectRatio(
             targetSize: targetSize
         )
-        
         let imageData = scaledImage.jpegData(compressionQuality: 0.5)
         let imageBase64String = imageData?.base64EncodedString()
-        
         let dataToSave: [String: Any] = ["FotoB64": imageBase64String!]
         docRef.setData(dataToSave) {(error) in
             if let error = error {
                 print("Error: "+(error.localizedDescription))
             }else{
-                print("Datos guardados a FileStore")
+                let alert = UIAlertController(title: "Datos enviados", message: "Los datos se han almacenado correctamente en FireStorage.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
             }
         }
         
@@ -78,7 +86,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         
         rootref.child("color").observe(DataEventType.value, with: { (snapshot) in
             let nuevoColor = snapshot.value as? String  ?? ""
-            self.view.backgroundColor = self.hexStringToUIColor(hex: nuevoColor)
+            self.view.backgroundColor = Funciones.hexStringToUIColor(hex: nuevoColor)
         })
         
         
@@ -150,7 +158,16 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         if(indexPath.row == 1){
             let alert = UIAlertController(title: "¿Qué desea hacer?", message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Visualizar", style: .default, handler: { action in
-                self.performSegue(withIdentifier: "fotoID", sender: indexPath)
+                
+                if self.image == nil{
+                    let alert = UIAlertController(title: "Falta Fotografía", message: "Primero debes tomar una fotografía.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }else{
+                    self.performSegue(withIdentifier: "fotoID", sender: indexPath)
+                }
+                
+                
             }))
             alert.addAction(UIAlertAction(title: "Tomar/Retomar foto", style: .default, handler: { action in
                 self.imagPickUp = self.imageAndVideos()
@@ -204,27 +221,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             vc?.foto = image
         }
  
-    func hexStringToUIColor (hex:String) -> UIColor {
-        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
-        if (cString.hasPrefix("#")) {
-            cString.remove(at: cString.startIndex)
-        }
-
-        if ((cString.count) != 6) {
-            return UIColor.gray
-        }
-
-        var rgbValue:UInt64 = 0
-        Scanner(string: cString).scanHexInt64(&rgbValue)
-
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
-    }
+    
 }
 
 

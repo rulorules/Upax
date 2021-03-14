@@ -37,18 +37,19 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
                 }
             }
         
-        pieCharts[indexPath.row].frame = CGRect(x: 0, y: 0, width: 400, height: 250)
-        pieCharts[indexPath.row].center = cell.contentView.center
+        pieCharts[indexPath.row].frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: 250)
+        //pieCharts[indexPath.row].center = cell.center
         
         cell.contentView.addSubview(pieCharts[indexPath.row])
+        
         
         var entries = [PieChartDataEntry]()
         var index = 0
         
         
         for j in self.datos.questions[indexPath.row].chartData {
-            print(self.datos.colors[index])
-            circleColors.append(hexStringToUIColor(hex: self.datos.colors[index]))
+            //print(self.datos.colors[index])
+            circleColors.append(Funciones.hexStringToUIColor(hex: self.datos.colors[index]) )
                 entries.append(PieChartDataEntry(value: Double(j.percetnage), label: j.text))
                 index+=1
             }
@@ -61,7 +62,6 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
         let data = PieChartData(dataSet: set)
         pieCharts[indexPath.row].data = data
         
-
         return cell
     }
     
@@ -74,7 +74,7 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
         
         rootref.child("color").observe(DataEventType.value, with: { (snapshot) in
             let nuevoColor = snapshot.value as? String  ?? ""
-            self.view.backgroundColor = self.hexStringToUIColor(hex: nuevoColor)
+            self.view.backgroundColor = Funciones.hexStringToUIColor(hex: nuevoColor)
         })
         
         GraphTableView.delegate = self
@@ -128,27 +128,6 @@ class GraphViewController: UIViewController, UITableViewDelegate, ChartViewDeleg
                dismiss(animated: false, completion: nil)
     }
     
-    func hexStringToUIColor (hex:String) -> UIColor {
-        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-
-        if (cString.hasPrefix("#")) {
-            cString.remove(at: cString.startIndex)
-        }
-
-        if ((cString.count) != 6) {
-            return UIColor.gray
-        }
-
-        var rgbValue:UInt64 = 0
-        Scanner(string: cString).scanHexInt64(&rgbValue)
-
-        return UIColor(
-            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0)
-        )
-    }
     
 
 }
