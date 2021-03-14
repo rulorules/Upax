@@ -1,0 +1,30 @@
+6.- Explique el ciclo de vida de un view controller.
+Consta de 5 momentos representados en métodos para administrar la jerarquia de las vistas
+viewDidLoad
+Sucede cuando el contenido de la vista es creado en la memoria o se carga del storyboard (solo se llama una vez al crear la vista).
+viewWillAppear
+Sucede un momento antes de que el contenido de la vista se agregue a la jerarquía de vistas
+viewDidAppear
+Sucede justo despues de que el contenido de la vista se agregue a la jueraquia de vistas
+viewWillDisappear
+Sucede poco antes de que el contenido de la vista se quite de la jerarquía de vistas
+viewDidDisappear
+Sucede justo despues de que el contenido de la vista se quita de la jerarquia de vistas
+
+7.- Explique el ciclo de vida de una aplicación.
+Una aplicación pasa por los siguiente estados:
+Finalizada: Cuando no ha sido abierta o ha sido finalizada por el sistema o usuario.
+Inactiva: Cuando esta en primer plano pero no recibe interacción del usuario.
+Activa: Cuando esta en primer plano y recibe interacciones.
+Segundo plano: cuando la aplicación se minimiza o requiere tiempo extra de ejecución poco antes de suspenderse.
+Suspendida: Cuando pasa a segundo plano pero ya no ejecuta código, sigue en memoria y puede removerse en cualquier momento de ella.
+
+8.- En que casos se usa un weak, un strong y un unowned.
+una variable weak se elimina de memoria si no hay una variable strong apuntando a ella
+Si se elimina una variable strong, todo lo weak relacionado a ella se elimina
+la variable unowned es como una variable weak pero no puede tener valor nil, por lo que no se debe de hacer unwrap de opcionales
+9.- ¿Qué es el ARC?
+Funcionalidad para eliminar automáticamente de memoria variables que no tengan referencia strong para liberar memoria
+
+10.- ¿Cuál será el color de la vista del ViewController que será mostrado en ejecución de la app?
+Rojo. 
